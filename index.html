@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lachlan Stephenson - Life Story</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#1c3d2e;--green-light:#f0f6f2;--green-mid:#4a8a68;--green-pale:#f7faf8;--border:#e5e5e5;--border-green:#e0ece6}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:#1a1a1a;min-height:100vh;overflow-x:hidden;cursor:none}
+
+/* Custom cursor */
+#cursor{position:fixed;width:10px;height:10px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transition:transform 0.15s ease,opacity 0.2s;transform:translate(-50%,-50%)}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid var(--green);border-radius:50%;pointer-events:none;z-index:9998;transition:transform 0.08s ease,width 0.25s ease,height 0.25s ease,opacity 0.2s;transform:translate(-50%,-50%);opacity:0.5}
+body:hover #cursor{opacity:1}
+
+/* Keyframes */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeLeft{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+@keyframes heroWord{from{opacity:0;transform:translateY(30px) skewY(3deg)}to{opacity:1;transform:translateY(0) skewY(0)}}
+@keyframes tagIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dotBounce{0%{transform:scale(0)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
+@keyframes lineGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(28,61,46,0.3)}70%{box-shadow:0 0 0 10px rgba(28,61,46,0)}100%{box-shadow:0 0 0 0 rgba(28,61,46,0)}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes revealBar{from{width:0}to{width:var(--bar-w)}}
+@keyframes particleFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0)}}
+
+/* Progress bar */
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--green),#4a8a68);width:0%;z-index:9997;transition:width 0.12s ease}
+
+/* Hero */
+.hero-bar{background:var(--green);padding:3rem 2rem 2.5rem;position:relative;overflow:hidden;margin-top:3px}
+.hero-bar::before{content:'';position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;border:50px solid rgba(255,255,255,0.04);animation:float 6s ease-in-out infinite}
+.hero-bar::after{content:'';position:absolute;right:80px;bottom:-80px;width:180px;height:180px;border-radius:50%;border:30px solid rgba(255,255,255,0.03);animation:float 8s ease-in-out 1s infinite}
+.hero-eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#6fb591;margin-bottom:0.8rem;font-weight:500;opacity:0;animation:fadeUp 0.6s ease 0.1s forwards}
+.hero-name{font-family:'DM Serif Display',serif;font-size:52px;color:#f5f0e8;line-height:1.05;margin-bottom:0.5rem;overflow:hidden}
+.hero-name span{display:inline-block;opacity:0;animation:heroWord 0.7s cubic-bezier(0.16,1,0.3,1) forwards}
+.hero-name .w1{animation-delay:0.25s}
+.hero-name .w2{animation-delay:0.38s}
+.hero-sub{font-size:14px;color:#8db8a0;font-weight:300;opacity:0;animation:fadeUp 0.6s ease 0.5s forwards}
+.hero-tags{display:flex;gap:8px;margin-top:1.4rem;flex-wrap:wrap}
+.tag{background:rgba(255,255,255,0.08);color:#b8d4c4;font-size:12px;padding:5px 14px;border-radius:20px;border:0.5px solid rgba(255,255,255,0.12);opacity:0;animation:tagIn 0.4s ease forwards;transition:background 0.25s,transform 0.25s,border-color 0.25s;cursor:none}
+.tag:hover{background:rgba(255,255,255,0.18);transform:translateY(-2px);border-color:rgba(255,255,255,0.3)}
+.tag:nth-child(1){animation-delay:0.55s}.tag:nth-child(2){animation-delay:0.67s}.tag:nth-child(3){animation-delay:0.79s}.tag:nth-child(4){animation-delay:0.91s}
+
+/* Stats bar */
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border-bottom:1px solid var(--border)}
+.stat{padding:1.2rem 1rem;text-align:center;border-right:1px solid var(--border);opacity:0;animation:countUp 0.5s ease forwards}
+.stat:last-child{border-right:none}
+.stat:nth-child(1){animation-delay:0.9s}.stat:nth-child(2){animation-delay:1.05s}.stat:nth-child(3){animation-delay:1.2s}
+.stat-num{font-family:'DM Serif Display',serif;font-size:28px;color:var(--green);display:block;line-height:1}
+.stat-label{font-size:11px;color:#888;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;display:block}
+
+/* Carousel */
+.carousel-wrap{background:var(--green-pale);border-bottom:1px solid var(--border-green);padding:1.4rem 2.5rem;position:relative;overflow:hidden;min-height:86px;display:flex;align-items:center}
+.carousel-quote{position:absolute;width:100%;padding:0 2.5rem;opacity:0;transform:translateY(10px);transition:opacity 0.4s ease,transform 0.4s ease;pointer-events:none}
+.carousel-quote.active{opacity:1;transform:translateY(0);pointer-events:auto;position:relative;padding:0 2.5rem}
+.carousel-quote p{font-family:'DM Serif Display',serif;font-style:italic;font-size:16px;color:var(--green);line-height:1.55}
+.carousel-quote cite{font-size:11px;color:var(--green-mid);letter-spacing:0.08em;font-style:normal;display:block;margin-top:6px}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border-green);border-radius:50%;width:28px;height:28px;cursor:none;color:var(--green-mid);font-size:16px;z-index:2;line-height:1;display:flex;align-items:center;justify-content:center;transition:all 0.2s;background:#fff}
+.carousel-btn:hover{background:var(--green);color:#fff;border-color:var(--green);transform:translateY(-50%) scale(1.1)}
+.carousel-btn.prev{left:8px}.carousel-btn.next{right:8px}
+.carousel-dots{display:flex;gap:6px;justify-content:center;padding:7px 0 0}
+.carousel-dot{width:5px;height:5px;border-radius:50%;background:#c5ddd1;border:none;cursor:none;padding:0;transition:background 0.25s,transform 0.3s,width 0.3s}
+.carousel-dot.on{background:var(--green);width:18px;border-radius:3px}
+
+/* Map */
+.map-section{background:var(--green-pale);border-top:1px solid var(--border-green);border-bottom:1px solid var(--border-green);padding:1.5rem}
+.map-heading{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--green-mid);font-weight:500;margin-bottom:1rem}
+.map-frame{width:100%;height:280px;border-radius:12px;border:1px solid #d0e4d8;overflow:hidden;transition:opacity 0.35s}
+.map-frame.loading{opacity:0.4}
+.map-frame iframe{width:100%;height:100%;border:none;display:block}
+.map-places{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap}
+.place-pill{background:#fff;border:1px solid #d0e4d8;border-radius:20px;padding:6px 16px;font-size:12px;color:var(--green);cursor:none;font-family:'DM Sans',sans-serif;transition:all 0.22s;font-weight:500}
+.place-pill:hover{transform:translateY(-2px);border-color:var(--green-mid)}
+.place-pill.on{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* Nav */
+.nav-row{display:flex;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none;background:#fff;position:sticky;top:3px;z-index:90;box-shadow:0 1px 0 var(--border)}
+.nav-row::-webkit-scrollbar{display:none}
+.nav-btn{background:none;border:none;border-bottom:2px solid transparent;padding:15px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;color:#777;cursor:none;white-space:nowrap;position:relative;overflow:hidden;transition:color 0.2s}
+.nav-btn::before{content:'';position:absolute;inset:0;background:var(--green-pale);transform:scaleY(0);transform-origin:bottom;transition:transform 0.22s ease;z-index:0}
+.nav-btn:hover::before{transform:scaleY(1)}
+.nav-btn::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:var(--green);transition:width 0.3s ease,left 0.3s ease;z-index:1}
+.nav-btn:hover::after,.nav-btn.on::after{width:100%;left:0}
+.nav-btn:hover{color:var(--green)}
+.nav-btn.on{color:var(--green)}
+.nav-btn span{position:relative;z-index:2}
+
+/* Content */
+.content{padding:0 1.5rem 3rem;max-width:700px;margin:0 auto}
+.section{display:none;padding-top:2rem}
+.section.on{display:block}
+
+/* Entries */
+.entry{display:grid;grid-template-columns:3px 1fr;gap:0 1.2rem;margin-bottom:2.2rem;cursor:none}
+.entry-line{background:var(--green);border-radius:2px;transform:scaleY(0);transform-origin:top;transition:transform 0.45s ease}
+.section.on .entry-line{transform:scaleY(1)}
+.section.on .entry:nth-child(1) .entry-line{transition-delay:0.15s}
+.section.on .entry:nth-child(2) .entry-line{transition-delay:0.25s}
+.section.on .entry:nth-child(3) .entry-line{transition-delay:0.35s}
+.section.on .entry:nth-child(4) .entry-line{transition-delay:0.45s}
+.section.on .entry:nth-child(5) .entry-line{transition-delay:0.55s}
+.section.on .entry{opacity:0;animation:fadeUp 0.45s ease forwards}
+.section.on .entry:nth-child(1){animation-delay:0.06s}
+.section.on .entry:nth-child(2){animation-delay:0.15s}
+.section.on .entry:nth-child(3){animation-delay:0.24s}
+.section.on .entry:nth-child(4){animation-delay:0.33s}
+.section.on .entry:nth-child(5){animation-delay:0.42s}
+
+.q{font-family:'DM Serif Display',serif;font-style:italic;font-size:17px;color:#1a1a1a;margin-bottom:0.55rem;line-height:1.45}
+.a{font-size:14px;line-height:1.8;color:#555;font-weight:300}
+.entry:hover .a{color:#333;transition:color 0.2s}
+
+/* Callout */
+.callout{background:var(--green-light);border-left:3px solid var(--green);padding:1.1rem 1.3rem;border-radius:0 10px 10px 0;margin:1.6rem 0;transition:transform 0.25s ease;cursor:none}
+.callout:hover{transform:translateX(5px)}
+.section.on .callout{opacity:0;animation:fadeLeft 0.5s ease 0.18s forwards}
+.callout p{font-family:'DM Serif Display',serif;font-style:italic;font-size:18px;color:var(--green);line-height:1.55}
+.callout cite{display:block;font-size:12px;color:var(--green-mid);margin-top:8px;font-style:normal;letter-spacing:0.05em}
+
+/* Grid tiles */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1.6rem 0}
+.section.on .grid2{opacity:0;animation:scaleIn 0.4s ease 0.1s forwards}
+.tile{border:1px solid var(--border);border-radius:12px;padding:1.1rem;background:#fafafa;transition:transform 0.22s ease,border-color 0.22s,background 0.22s;cursor:none;position:relative;overflow:hidden}
+.tile::before{content:'';position:absolute;inset:0;background:var(--green-light);opacity:0;transition:opacity 0.22s}
+.tile:hover{transform:translateY(-4px);border-color:#b5d4c2}
+.tile:hover::before{opacity:1}
+.tile-label{font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--green-mid);margin-bottom:6px;font-weight:500;position:relative;z-index:1}
+.tile-text{font-size:14px;color:#1a1a1a;line-height:1.55;position:relative;z-index:1}
+
+/* Timeline */
+.tl{position:relative;margin:1.6rem 0}
+.section.on .tl{opacity:0;animation:fadeUp 0.4s ease 0.08s forwards}
+.tl-item{display:flex;gap:1rem;margin-bottom:1.6rem;align-items:flex-start;opacity:0;transform:translateX(-12px);transition:opacity 0.4s ease,transform 0.4s ease}
+.section.on .tl-item:nth-child(1){opacity:1;transform:none;transition-delay:0.18s}
+.section.on .tl-item:nth-child(2){opacity:1;transform:none;transition-delay:0.31s}
+.section.on .tl-item:nth-child(3){opacity:1;transform:none;transition-delay:0.44s}
+.tl-dot{width:11px;height:11px;border-radius:50%;background:var(--green);flex-shrink:0;margin-top:4px;position:relative;transform:scale(0);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);animation:pulseRing 2s ease 1.2s}
+.section.on .tl-item:nth-child(1) .tl-dot{transform:scale(1);transition-delay:0.22s}
+.section.on .tl-item:nth-child(2) .tl-dot{transform:scale(1);transition-delay:0.35s}
+.section.on .tl-item:nth-child(3) .tl-dot{transform:scale(1);transition-delay:0.48s}
+.tl-dot::after{content:'';position:absolute;left:50%;top:15px;transform:translateX(-50%);width:1px;height:calc(100% + 1rem + 15px);background:var(--border)}
+.tl-item:last-child .tl-dot::after{display:none}
+.tl-year{font-size:11px;text-transform:uppercase;letter-spacing:0.12em;color:var(--green-mid);font-weight:500;min-width:75px}
+.tl-text{font-size:14px;color:#555;line-height:1.65}
+
+/* Sig */
+.sig{text-align:center;padding:2.5rem 1rem;border-top:1px solid var(--border);margin-top:2rem}
+.section.on .sig{opacity:0;animation:fadeUp 0.5s ease 0.35s forwards}
+.sig-initials{width:60px;height:60px;border-radius:50%;background:var(--green);color:#f5f0e8;font-family:'DM Serif Display',serif;font-size:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);cursor:none}
+.sig-initials:hover{transform:scale(1.12) rotate(6deg);animation:pulseRing 1s ease}
+.sig p{font-size:13px;color:#999;font-style:italic;line-height:1.75}
+
+/* Skill bar (influences section) */
+.skill-bars{margin:1.6rem 0}
+.section.on .skill-bars{opacity:0;animation:fadeUp 0.4s ease 0.15s forwards}
+.skill-row{margin-bottom:14px}
+.skill-top{display:flex;justify-content:space-between;margin-bottom:5px}
+.skill-name{font-size:12px;font-weight:500;color:var(--green)}
+.skill-pct{font-size:12px;color:#aaa}
+.skill-track{height:5px;background:#eee;border-radius:3px;overflow:hidden}
+.skill-fill{height:100%;background:var(--green);border-radius:3px;width:0;transition:width 1s cubic-bezier(0.16,1,0.3,1)}
+
+/* Scroll reveal for elements outside tabs */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:500px){.hero-name{font-size:36px}.grid2{grid-template-columns:1fr}.nav-btn{padding:12px 14px;font-size:12px}.stat-num{font-size:22px}}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="progress-bar"></div>
+
+<div class="hero-bar">
+  <p class="hero-eyebrow">Life story interview</p>
+  <h1 class="hero-name"><span class="w1">Lachlan</span><br><span class="w2">Stephenson</span></h1>
+  <p class="hero-sub">Born 1974 · Bundanoon, New South Wales</p>
+  <div class="hero-tags">
+    <span class="tag">Small-town upbringing</span>
+    <span class="tag">Cricket</span>
+    <span class="tag">23 years in business</span>
+    <span class="tag">Holdens</span>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num" data-target="52">0</span><span class="stat-label">Years old</span></div>
+  <div class="stat"><span class="stat-num" data-target="23">0</span><span class="stat-label">Years in business</span></div>
+  <div class="stat"><span class="stat-num" data-target="4">0</span><span class="stat-label">Key influences</span></div>
+</div>
+
+<div class="carousel-wrap" id="carousel">
+  <button class="carousel-btn prev" onclick="moveCarousel(-1)" aria-label="Previous quote">&#8249;</button>
+  <div class="carousel-quote active">
+    <p>A small town where everyone knew everyone.</p>
+    <cite>- On growing up in Bundanoon</cite>
+  </div>
+  <div class="carousel-quote">
+    <p>Don't be so hard on yourself. Actually do travel.</p>
+    <cite>- Advice to his younger self</cite>
+  </div>
+  <div class="carousel-quote">
+    <p>I became significantly more emotional. That moment changed me as a person.</p>
+    <cite>- On losing his father</cite>
+  </div>
+  <div class="carousel-quote">
+    <p>Respect - treat others how you expect to be treated.</p>
+    <cite>- On the values that matter most</cite>
+  </div>
+  <div class="carousel-quote">
+    <p>I guess just to be remembered by those who are close to me.</p>
+    <cite>- On his legacy</cite>
+  </div>
+  <button class="carousel-btn next" onclick="moveCarousel(1)" aria-label="Next quote">&#8250;</button>
+</div>
+<div class="carousel-dots" id="carousel-dots"></div>
+
+<div class="map-section reveal">
+  <p class="map-heading">Places in his story</p>
+  <div class="map-frame" id="map-frame">
+    <iframe id="map-iframe" src="https://maps.google.com/maps?q=Bundanoon+NSW+Australia&z=13&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div class="map-places">
+    <button class="place-pill on" onclick="setPlace(this,'Bundanoon+NSW+Australia',13)">Bundanoon</button>
+    <button class="place-pill" onclick="setPlace(this,'Moss+Vale+NSW+Australia',13)">Moss Vale</button>
+    <button class="place-pill" onclick="setPlace(this,'Southern+Highlands+NSW+Australia',10)">Southern Highlands</button>
+  </div>
+</div>
+
+<nav class="nav-row">
+  <button class="nav-btn on" onclick="show('roots',this)"><span>Roots</span></button>
+  <button class="nav-btn" onclick="show('school',this)"><span>School &amp; uni</span></button>
+  <button class="nav-btn" onclick="show('influences',this)"><span>Influences</span></button>
+  <button class="nav-btn" onclick="show('challenges',this)"><span>Challenges</span></button>
+  <button class="nav-btn" onclick="show('wisdom',this)"><span>Wisdom</span></button>
+</nav>
+
+<div class="content">
+
+  <div class="section on" id="s-roots">
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">Where did you grow up, and what was your childhood like?</p>
+        <p class="a">Bundanoon - a fairly simple childhood in a small country town with a small primary school. Life moved quietly and everyone knew everyone.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What are some of your earliest memories?</p>
+        <p class="a">Sitting with my Nana, telling her about who my Kindergarten teacher would be. And moving bricks one by one - about 10 metres - to help Dad build what turned out to be an illegal sunroom.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p>A small town where everyone knew everyone.</p>
+      <cite>- On Bundanoon</cite>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What hobbies or interests did you have growing up?</p>
+        <p class="a">Bike riding, cricket, soccer or hockey depending on the season - and breeding budgies.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="s-school">
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What was your school life like?</p>
+        <p class="a">Primary school was small and happy - I even planted a gum tree that's still there today, very big. Then Moss Vale High School through to Year 12. I really don't have too many bad memories from that time.</p>
+      </div>
+    </div>
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div>
+          <p class="tl-year">Primary school</p>
+          <p class="tl-text">Bundanoon Primary - tight-knit, everyone knew everyone. Planted a gum tree still standing today.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div>
+          <p class="tl-year">High school</p>
+          <p class="tl-text">Moss Vale High School through to Year 12. Mostly good memories.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div>
+          <p class="tl-year">University</p>
+          <p class="tl-text">"Look back now and see it was fun for the most part." A favourite chapter of life.</p>
+        </div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What are some of your favourite memories so far?</p>
+        <p class="a">Uni. Looking back now I can see it was fun for the most part.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="s-influences">
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">Who has had the biggest influence on your life?</p>
+        <p class="a">For music, my brother Greg. For sport and cricket in particular, my Grandfather. For Holdens, also my brother. For work ethic, my Dad.</p>
+      </div>
+    </div>
+    <div class="skill-bars" id="skill-bars">
+      <div class="skill-row"><div class="skill-top"><span class="skill-name">Music (Brother Greg)</span><span class="skill-pct">95%</span></div><div class="skill-track"><div class="skill-fill" style="--bar-w:95%"></div></div></div>
+      <div class="skill-row"><div class="skill-top"><span class="skill-name">Cricket (Grandfather)</span><span class="skill-pct">90%</span></div><div class="skill-track"><div class="skill-fill" style="--bar-w:90%"></div></div></div>
+      <div class="skill-row"><div class="skill-top"><span class="skill-name">Holdens (Brother Greg)</span><span class="skill-pct">85%</span></div><div class="skill-track"><div class="skill-fill" style="--bar-w:85%"></div></div></div>
+      <div class="skill-row"><div class="skill-top"><span class="skill-name">Work ethic (Dad)</span><span class="skill-pct">98%</span></div><div class="skill-track"><div class="skill-fill" style="--bar-w:98%"></div></div></div>
+    </div>
+    <div class="grid2">
+      <div class="tile">
+        <p class="tile-label">Music</p>
+        <p class="tile-text">Brother Greg - opened the door to a lifelong love of music.</p>
+      </div>
+      <div class="tile">
+        <p class="tile-label">Cricket</p>
+        <p class="tile-text">His Grandfather passed down a deep passion for the game.</p>
+      </div>
+      <div class="tile">
+        <p class="tile-label">Holdens</p>
+        <p class="tile-text">Greg again - a shared love of classic Australian cars.</p>
+      </div>
+      <div class="tile">
+        <p class="tile-label">Work ethic</p>
+        <p class="tile-text">His father set the standard. A lesson that has stuck for life.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What values are most important to you?</p>
+        <p class="a">Respect - treat others how you expect to be treated.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="s-challenges">
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What is a big challenge you've faced in your life?</p>
+        <p class="a">My Dad passing away. It was unexpected - he was only 64.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p>I became significantly more emotional. That moment changed me as a person.</p>
+      <cite>- On losing his father</cite>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">How did you overcome that challenge?</p>
+        <p class="a">Time to heal. Trying not to think about it too much - but remembering when appropriate.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What achievement are you most proud of?</p>
+        <p class="a">Twenty-three years building my own business from the ground up.</p>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What goals do you have for the future?</p>
+        <p class="a">Retire from business - but making sure the kids are set up as much as possible first.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="s-wisdom">
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What advice would you give to your younger self?</p>
+        <p class="a">Don't be so hard on myself. And actually - do travel.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <p>Don't be so hard on yourself. Actually do travel.</p>
+      <cite>- Advice to a younger Lachlan</cite>
+    </div>
+    <div class="entry">
+      <div class="entry-line"></div>
+      <div>
+        <p class="q">What do you want your legacy or story to be?</p>
+        <p class="a">I really don't know. I guess just to be remembered by those who are close to me.</p>
+      </div>
+    </div>
+    <div class="sig">
+      <div class="sig-initials">LS</div>
+      <p>A life rooted in a small country town,<br>shaped by family, cricket, and 23 years of building something his own.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Custom cursor
+var cur = document.getElementById('cursor');
+var ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', function(e) {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('button,a,.tile,.callout,.entry,.sig-initials').forEach(function(el) {
+  el.addEventListener('mouseenter', function() {
+    cur.style.transform = 'translate(-50%,-50%) scale(2)';
+    ring.style.width = '48px'; ring.style.height = '48px';
+  });
+  el.addEventListener('mouseleave', function() {
+    cur.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.width = '32px'; ring.style.height = '32px';
+  });
+});
+
+// Progress bar
+window.addEventListener('scroll', function() {
+  var st = window.scrollY || document.documentElement.scrollTop;
+  var dh = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress-bar').style.width = (dh > 0 ? (st/dh)*100 : 0) + '%';
+});
+
+// Scroll reveal
+var revealEls = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, {threshold:0.15});
+revealEls.forEach(function(el) { io.observe(el); });
+
+// Count-up stats
+function animateCount(el, target, duration) {
+  var start = 0; var step = target / (duration / 16);
+  var t = setInterval(function() {
+    start = Math.min(start + step, target);
+    el.textContent = Math.round(start);
+    if (start >= target) clearInterval(t);
+  }, 16);
+}
+setTimeout(function() {
+  document.querySelectorAll('.stat-num').forEach(function(el) {
+    animateCount(el, parseInt(el.dataset.target), 1200);
+  });
+}, 900);
+
+// Section nav
+function show(id, btn) {
+  var cur = document.querySelector('.section.on');
+  if (cur) cur.classList.remove('on');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('on'));
+  var next = document.getElementById('s-' + id);
+  void next.offsetWidth;
+  next.classList.add('on');
+  btn.classList.add('on');
+  document.querySelector('.content').scrollIntoView({behavior:'smooth', block:'start'});
+  if (id === 'influences') {
+    setTimeout(function() {
+      document.querySelectorAll('.skill-fill').forEach(function(f) {
+        f.style.width = f.style.getPropertyValue('--bar-w') || f.style.cssText.match(/--bar-w:([\d%]+)/)?.[1] || '0%';
+        f.style.transition = 'width 1s cubic-bezier(0.16,1,0.3,1)';
+      });
+    }, 200);
+  }
+}
+
+// Skill bars on first load if influences is default (it's not, but just in case)
+window.addEventListener('load', function() {
+  var first = document.querySelector('.section.on');
+  if (first) { first.classList.remove('on'); void first.offsetWidth; first.classList.add('on'); }
+});
+
+// Carousel
+var cIdx = 0;
+var quotes = document.querySelectorAll('.carousel-quote');
+var dotsEl = document.getElementById('carousel-dots');
+quotes.forEach(function(_, i) {
+  var d = document.createElement('button');
+  d.className = 'carousel-dot' + (i === 0 ? ' on' : '');
+  d.setAttribute('aria-label', 'Quote ' + (i+1));
+  d.onclick = function() { goCarousel(i); };
+  dotsEl.appendChild(d);
+});
+function goCarousel(n) {
+  var prev = quotes[cIdx];
+  prev.style.opacity = '0'; prev.style.transform = 'translateY(-8px)';
+  setTimeout(function() { prev.classList.remove('active'); prev.style.opacity=''; prev.style.transform=''; }, 350);
+  document.querySelectorAll('.carousel-dot')[cIdx].classList.remove('on');
+  cIdx = (n + quotes.length) % quotes.length;
+  setTimeout(function() { quotes[cIdx].classList.add('active'); document.querySelectorAll('.carousel-dot')[cIdx].classList.add('on'); }, 360);
+}
+function moveCarousel(dir) { goCarousel(cIdx + dir); }
+setInterval(function() { moveCarousel(1); }, 5000);
+
+// Map
+function setPlace(btn, query, zoom) {
+  document.querySelectorAll('.place-pill').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  var frame = document.getElementById('map-frame');
+  frame.classList.add('loading');
+  var iframe = document.getElementById('map-iframe');
+  iframe.src = 'https://maps.google.com/maps?q=' + query + '&z=' + zoom + '&output=embed';
+  iframe.onload = function() { frame.classList.remove('loading'); };
+}
+
+// Click particle burst
+document.addEventListener('click', function(e) {
+  for (var i = 0; i < 8; i++) {
+    var p = document.createElement('div');
+    var angle = (i / 8) * 360;
+    var dist = 30 + Math.random() * 30;
+    var dx = Math.cos(angle * Math.PI/180) * dist + 'px';
+    var dy = Math.sin(angle * Math.PI/180) * dist + 'px';
+    p.style.cssText = 'position:fixed;width:5px;height:5px;border-radius:50%;background:#1c3d2e;pointer-events:none;z-index:9996;left:'+e.clientX+'px;top:'+e.clientY+'px;--dx:'+dx+';--dy:'+dy+';animation:particleFly 0.5s ease forwards;transform:translate(-50%,-50%)';
+    document.body.appendChild(p);
+    setTimeout(function() { p.remove(); }, 520);
+  }
+});
+</script>
+
+</body>
+</html>
